@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 #-----------------------------------------------------------------------------
 # Name:        Log.py
 #
@@ -7,9 +7,10 @@
 #
 # Author:      Yuancheng Liu
 #
-# Created:     2018/07/13
-# Copyright:   
-# License:     
+# Version:     v0.1.3
+# Created:     2020/07/13
+# Copyright:   Copyright (c) 2020 LiuYuancheng
+# License:     MIT License
 #-----------------------------------------------------------------------------
 import os
 import time

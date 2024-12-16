@@ -10,9 +10,9 @@
 # Author:      Yuancheng Liu
 #
 # Created:     2019/11/12
-# Version:     v_0.1
-# Copyright:   n.a
-# License:     n.a
+# Version:     v_0.1.2
+# Copyright:   Copyright (c) 2019 LiuYuancheng
+# License:     MIT License
 #-----------------------------------------------------------------------------
 """ Program Design:
     Some times we want to read some program's simple customized config files which 
@@ -27,6 +27,7 @@
     3. Append the new data line into the config file with time stamps.
 """
 import os
+import json
 import datetime
 
 FILTER_CHAR = ('#', '', '\n', '\r', '\t') # comment lines 1st identify charactors.
@@ -89,6 +90,10 @@ class ConfigLoader(object):
         for line in self.configLines:
             if specChar in line:
                 key, val = line.split(':', 1)
+                if val.lower() == 'true':
+                    val = True
+                elif val.lower() == 'false': 
+                    val = False
                 result[key] = val
         return result
 
@@ -126,6 +131,55 @@ class ConfigLoader(object):
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
+class JsonLoader(object):
+
+    def __init__(self):
+        """ Init the Json file loader class."""
+        self.jsonFilePath = None
+        self.jsonData = None
+
+    def _haveData(self):
+        return not (self.jsonData is None or self.jsonFilePath is None)
+    
+    #-----------------------------------------------------------------------------
+    def loadFile(self, filePath):
+        """" Load the json file. """
+        if not str(filePath).endswith('.json'):
+            print("> Error: JsonLoader.loadFile() file path is not a json file.")
+            return False
+        if os.path.exists(filePath):
+            try:
+                with open(filePath, 'r') as fh:
+                    self.jsonData= json.loads(fh.read())
+                    self.jsonFilePath = filePath
+            except Exception as err:
+                print("Error to load the json file: %s" % str(err))
+                return False
+        else:
+            print("> Error: JsonLoader.loadFile() file path does not exist: %s" % filePath)
+            return False
+
+    #-----------------------------------------------------------------------------
+    def getJsonData(self):
+        return self.jsonData
+
+    def getJsonFilePath(self):
+        return self.jsonFilePath
+    
+    #-----------------------------------------------------------------------------
+    def updateRcdFile(self, indent=4):
+        if self._haveData():
+            try:
+                with open(self.jsonFilePath, 'w') as fh:
+                    fh.write(json.dumps(self.jsonData, indent=indent))
+                    return True
+            except Exception as err:
+                print("Error to write the json file: %s" % str(err))
+                return False
+        return False
+
+#-----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 def testCaseFilter(line):
     if 'IPADD' in line: return True
     return False
@@ -135,7 +189,7 @@ def testCase(mode=0):
     tCount, tPass = 0, True
     if mode == 0:
         dirpath = os.path.dirname(__file__)
-        cfgfilePath = os.path.join(dirpath, 'NodesRcd.txt')
+        cfgfilePath = os.path.join(dirpath, 'cfgLoaderR.txt')
         
         # test case 0
         print("0. Init the config loader :\n----")
@@ -185,21 +239,8 @@ def testCase(mode=0):
         print("Test passed: %s \n----\n" % str(tPass))
 
         print(" => All test finished: %s/4" % str(tCount))
-    else:
-        dirpath = os.path.dirname(__file__)
-        cfgfilePath = os.path.join(dirpath, 'NodesRcd.txt')
-        import json
-        # test case 0
-        print("0. Init the config loader :\n----")
-        cfgLoader = ConfigLoader(
-            cfgfilePath, mode='r', filterChars=('#', '', '\n'))
-        dataDict = cfgLoader.getJson()
-        for key, val in dataDict.items():
-            y = json.loads(val)
-            print(y)
-
 
 
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
-    testCase(mode=1)
+    testCase()

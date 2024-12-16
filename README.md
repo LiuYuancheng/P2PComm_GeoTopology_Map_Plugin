@@ -1,12 +1,15 @@
+# P2PComm_GeoTopology_Map_Plugin
 
+**Program Design Purpose**: We want to create a flask web host plugin which can be integrated in the Security Information and Event Management (SIEM) system used to visualize the peer to peer communication status (such as the data flow throughput between a 2 encryption device, of data transmission speed between a server and a client) with  network topology on the geolocation map. Which can help the security admin monitor the real time p2p communication state of a distributed system.
 
-# Gateway-Topographic-Map
-
+```python
+# Version:     v0.2.1
+# Created:     2020/05/22
+# Copyright:   Copyright (c) 2024 LiuYuancheng
+# License:     MIT License 
 ```
- All copyrights reserved by NUS-Singtel Cyber Security R&D Lab (Jun 2016 to Jun 2021)
-```
 
-**Program Design Purpose**: We want to create  web host program with database to provide a topographic map panel website to show gateway devices' information (geo-location, communication details, detail current working state). 
+**Table of Contents**
 
 [TOC]
 
