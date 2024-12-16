@@ -24,6 +24,7 @@ from flask_socketio import SocketIO
 
 # import project local modules.
 import p2pCommMapGlobal as gv
+import p2pCommMapDataMgr as dm
 import Log
 
 
@@ -31,7 +32,6 @@ import Log
 TEST_MODE = True    # Test mode flag - True: test on local computer.
 LOG_FLAG = True     # log information display flag.
 
-NODE_INFO_QUERY = "SELECT * FROM gatewayInfo"
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -39,11 +39,15 @@ app.config['SECRET_KEY'] = 'secret_key'
 app.config['DEBUG'] = True  
 gv.iSocketIO = SocketIO(app)
 
+gv.iDataMgr = dm.DataMgr(None, 0, "server thread")
+gv.iDataMgr.loadNodesData()
+gv.iDataMgr.start()
+
 #----------------------------------------------------------------------------------------------------
 # Server setup function
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    Log.info("flask app: route request.", printFlag=LOG_FLAG)
+    gv.gDebugPrint("flask app: route request.", logType=gv.LOG_INFO)
     if request.method == 'POST':
         gv.gPeriod = int(request.form['rate-uptake'])
         for idx, data in enumerate(gv.gMapFilter):
@@ -56,39 +60,16 @@ def home():
 
 @gv.iSocketIO.on('connect', namespace='/test')
 def test_connect():
-    Log.info("SocketIO: Client connected.", printFlag=LOG_FLAG)
+    gv.gDebugPrint("SocketIO: Client connected.", logType=gv.LOG_INFO)
 
 @gv.iSocketIO.on('disconnect', namespace='/test')
 def test_disconnect():
-    Log.info("SocketIO: Client disconnected.", printFlag=LOG_FLAG)
-
-
-
-#----------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------
-def main():
-    # Init the logger: 
-    TOPDIR = 'src'                      # folder name where we put Logs, Maps, etc
-    gWD = os.getcwd()
-    idx = gWD.find(TOPDIR)
-    if idx != -1:
-        gTopDir = gWD[:idx + len(TOPDIR)]
-    else:
-        gTopDir = gWD   # did not find TOPDIR - use WD
-    print('gTopDir:%s' % gTopDir)
-
-    gv.iDataMgr = DataMgr(None, 0, "server thread")
-    gv.iDataMgr.loadNodesData()
-    gv.iDataMgr.start()
-    gv.iSocketIO.run(app, host=gv.gflaskHost, port=gv.gflaskPort)
-
+    gv.gDebugPrint("SocketIO: Client disconnected.", logType=gv.LOG_INFO)
 
 #----------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
-    main()
+    gv.iSocketIO.run(app, host=gv.gflaskHost, port=gv.gflaskPort)
     print('End of __main__')
-
-
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------

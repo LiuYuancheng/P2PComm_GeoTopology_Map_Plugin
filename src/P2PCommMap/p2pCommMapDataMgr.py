@@ -19,6 +19,8 @@ import sqlite3
 from copy import deepcopy
 import p2pCommMapGlobal as gv
 
+NODE_INFO_QUERY = "SELECT * FROM gatewayInfo"
+
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 class DevNode(object):
@@ -65,7 +67,7 @@ class DataMgr(threading.Thread):
             print("__init__ error: %s" %str(Error))
             exit()
         self.terminate = False
-        Log.info("DataMgr: Data manager thread inited.", printFlag=LOG_FLAG)
+        gv.gDebugPrint("DataMgr: Data manager thread inited.", logType=gv.LOG_INFO)
 
 #------------------------------------------------------------------------------------
     def _buildComLink(self):
@@ -89,7 +91,7 @@ class DataMgr(threading.Thread):
                 if not self._checkLinkExist(comlink['pts']): self.linkList.append(comlink)
         
         # print all the build link
-        _ = [Log.info("DataMgr: created link: %s", str(link), printFlag=LOG_FLAG) for link in self.linkList]
+        _ = [gv.gDebugPrint("DataMgr: created link: %s", str(link), logType=gv.LOG_INFO) for link in self.linkList]
 
 #----------------------------------------------------------------------------------------------------
     def loadNodesData(self):
@@ -97,7 +99,7 @@ class DataMgr(threading.Thread):
         # node data example : [5,Control Hub 2, 10.0.0.5, 1.3525, 103.9447, 0, 5, HB]
         self.nodeCursor.execute(NODE_INFO_QUERY)
         data = self.nodeCursor.fetchall()
-        Log.info("DataMgr : all nodes information: %s", str(data), printFlag=LOG_FLAG)
+        gv.gDebugPrint("DataMgr : all nodes information: %s", str(data), logType=gv.LOG_INFO)
         gwIDlist = [i[0] for i in data] 
         for nodeData in data:
             currList = list(nodeData)
@@ -197,7 +199,7 @@ class DataMgr(threading.Thread):
             self.linkList[i]['throughput1'] = self.nodeDict[str(commList[0])].inThrput if linkAct else 0
             self.linkList[i]['throughput2'] = self.nodeDict[str(commList[1])].inThrput if linkAct else 0
 
-        Log.info("link list: %s" %str(self.linkList))
+        gv.gDebugPrint("link list: %s" %str(self.linkList))
         # Update the web page link
         gv.iSocketIO.emit('newrequest', {'comm': self.getCommJSON(),
                                          'activation_circles': self.getNodeActJSON()}, namespace='/test')
@@ -209,7 +211,7 @@ class DataMgr(threading.Thread):
         data = self.nodeCursor.fetchall()
         if len(data) > 0: gv.gLatestTime = data[-1][0]
         #changeList = [] # e.g. [{'no': [1], 'updateInfo': {'id1': {'comTo': [], 'throughputIn': 0, 'throughputOut': 0, 'actF': 0}}}]
-        Log.info("DataMgr: Node update data : %s", str(data), printFlag=LOG_FLAG)
+        gv.gDebugPrint("DataMgr: Node update data : %s", str(data), logType=gv.LOG_INFO)
         for state in data:
             key, val = str(state[1]), json.loads(state[2])
             self.nodeDict[key].keyExchange = val['comTo']
@@ -220,8 +222,8 @@ class DataMgr(threading.Thread):
 #-----------------------------------------------------------------------------------
     def run(self):
         """ Thread run() function call by start(). """
-        Log.info("gv.iDataMgr: run() function loop start, terminate flag [%s]", str(
-            self.terminate), printFlag=LOG_FLAG)
+        gv.gDebugPrint("gv.iDataMgr: run() function loop start, terminate flag [%s]", str(
+            self.terminate), logType=gv.LOG_INFO)
         time.sleep(1)  # sleep 1 second to wait socketIO start to run.
         while not self.terminate:
             self.updateLink()
@@ -230,7 +232,7 @@ class DataMgr(threading.Thread):
 #-----------------------------------------------------------------------------------
     def setUpdateRate(self, periodic):        
         self.periodic = periodic
-        Log.info("gv.iDataMgr: Set update periodic to %s", str(self.periodic), printFlag=LOG_FLAG)
+        gv.gDebugPrint("gv.iDataMgr: Set update periodic to %s", str(self.periodic), logType=gv.LOG_INFO)
 
 #----------------------------------------------------------------------------------------------------
     def stop(self):
