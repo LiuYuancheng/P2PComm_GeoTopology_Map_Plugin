@@ -193,7 +193,8 @@ class DataMgr(threading.Thread):
             #self.linkList[i]['keyExchange'] = linkKey
 
             for idx in [int(i) for i in commList]:
-                linkAct = linkAct and self.nodeDict[str(idx)].activeFlag
+                if str(idx) in self.nodeDict.keys():
+                    linkAct = linkAct and self.nodeDict[str(idx)].activeFlag
             self.linkList[i]['active'] = linkAct
 
             # Connect the server for throughput information else give 0
@@ -212,13 +213,14 @@ class DataMgr(threading.Thread):
         data = self.nodeCursor.fetchall()
         if len(data) > 0: gv.gLatestTime = data[-1][0]
         #changeList = [] # e.g. [{'no': [1], 'updateInfo': {'id1': {'comTo': [], 'throughputIn': 0, 'throughputOut': 0, 'actF': 0}}}]
-        gv.gDebugPrint("DataMgr: Node update data : %s", str(data), logType=gv.LOG_INFO)
+        gv.gDebugPrint("DataMgr: Node update data : %s" %str(data), logType=gv.LOG_INFO)
         for state in data:
             key, val = str(state[1]), json.loads(state[2])
-            self.nodeDict[key].keyExchange = val['comTo']
-            self.nodeDict[key].inThrput = val['throughputIn']
-            self.nodeDict[key].outThrput = val['throughputOut']
-            self.nodeDict[key].activeFlag = val['actF']
+            if key in self.nodeDict.keys():
+                self.nodeDict[key].keyExchange = val['comTo']
+                self.nodeDict[key].inThrput = val['throughputIn']
+                self.nodeDict[key].outThrput = val['throughputOut']
+                self.nodeDict[key].activeFlag = val['actF']
 
 #-----------------------------------------------------------------------------------
     def run(self):
