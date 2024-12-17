@@ -15,20 +15,23 @@ function createInfoDetail(name, nameArr, throughput) {
         "</b> <img src='../static/images/gateway.jpg'/>"
 
     var tableHeader = 
-    `<table id="info-window">
-        <tr id="info-header">
-            <td>
-                Communication
-            </td>
-            <td>
-                Throughput
-            </td>
-        </tr>
+    `<table id="info-window" class="table table-striped" >
+        <thead>
+            <tr id="info-header">
+                <td>
+                    Communication
+                </td>
+                <td>
+                    Throughput
+                </td>
+            </tr>
+        </thead>
+        <tbody>
     `
 
     var tableInfo = "";
 
-    var tableFooter = "</table>";
+    var tableFooter = "</tbody></table>";
 
     if (throughput != null) {
         // Parse the information into HTML format
@@ -41,7 +44,7 @@ function createInfoDetail(name, nameArr, throughput) {
         }
     }
 
-    return "<b>" + name + image + "<br><br>" + tableHeader + tableInfo + tableFooter;
+    return "<b>"+ name + image + "<br><br>" + tableHeader + tableInfo + tableFooter;
 }
 
 

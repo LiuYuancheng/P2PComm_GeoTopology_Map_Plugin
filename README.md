@@ -1,6 +1,8 @@
 # P2PComm_GeoTopology_Map_Plugin
 
-**Program Design Purpose**: We want to create a flask web host plugin which can be integrated in the Security Information and Event Management (SIEM) system used to visualize the peer to peer communication status (such as the data flow throughput between a 2 encryption device, of data transmission speed between a server and a client) with  network topology on the geolocation map. Which can help the security admin monitor the real time p2p communication state of a distributed system.
+**Program Design Purpose**: 
+
+The goal of this project is to develop a Flask-based web App plugin that can be integrated into a Security Information and Event Management (SIEM) system. This plugin is designed to visualize real-time peer-to-peer (P2P) communication status within a distributed system. Key metrics such as data flow throughput between encrypted devices and data transmission speed between servers and clients will be displayed alongside the network topology on an interactive geolocation map. This visualization will enable security administrators to effectively monitor, analyze, and manage real-time P2P communication states, helping to identify potential performance bottlenecks, latency issues, and abnormal communication patterns across the distributed network.
 
 ```python
 # Version:     v0.2.1
@@ -13,7 +15,21 @@
 
 [TOC]
 
+------
+
 ### Introduction
+
+
+
+
+
+
+
+
+
+
+
+
 
 This project will create a map panel to show gateway devices' communication situation topographic. It is is a sub-project of the ‘QSG-Manager dashboard’ (Quantum Safe Gateway Manager) project. In the main ‘Quantum Safe Gateway’ project, there will be several gateway devices communicating with each other. QSG-Manager will collect and monitor the internal status of our gateway devices and visualize all the data. 
 

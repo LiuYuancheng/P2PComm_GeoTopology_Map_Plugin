@@ -2,15 +2,15 @@
 #-----------------------------------------------------------------------------
 # Name:        databaseCreater.py
 #
-# Purpose:     This module is used to create/add the gateway node and the current
-#              running state info in to the database.
+# Purpose:     This module is a random data generator to create/add the gateway 
+#              node and the current running state info in to the database.
 #
 # Author:      Yuancheng Liu
 #
 # Created:     2021/12/07
-# Version:     v_0.2
-# Copyright:   n.a
-# License:     n.a
+# Version:     v_0.2.1
+# Copyright:   Copyright (c) 2024 LiuYuancheng
+# License:     MIT License
 #-----------------------------------------------------------------------------
 
 import os
@@ -22,13 +22,10 @@ from sqlite3 import Error
 import p2pCommMapGlobal as gv
 import ConfigLoader
 
-print("Current working directory is : %s" % os.getcwd())
-dirpath = os.path.dirname(__file__)
-print("Current source code location : %s" % dirpath)
 GV_FLG = True  # Flag to identify whether use global value
 
-DB_PATH = gv.DB_PATH if GV_FLG else os.path.join(dirpath , "node_database.db")
-NODES_FILE = gv.NODES_FILE if GV_FLG else  os.path.join(dirpath, 'nodes_record.json')
+DB_PATH = gv.DB_PATH if GV_FLG else os.path.join(gv.dirpath , "node_database.db")
+NODES_FILE = gv.NODES_FILE if GV_FLG else  os.path.join(gv.dirpath, 'nodes_record.json')
 
 # gateway information table query.
 gwInfoTable = "CREATE TABLE IF NOT EXISTS gatewayInfo(id integer PRIMARY KEY,\
