@@ -2,9 +2,8 @@
 #-----------------------------------------------------------------------------
 # Name:        p2pCommMapApp.py
 #
-# Purpose:     This module will create a topographic map to show deployed gateway 
-#              devices communication situation. It is is a sub-project of the 
-#              'QSG-Manager dashboard' (Quantum Safe Gateway Manager) project. 
+# Purpose:     This module will create a flask web plug-in p2p connection topology 
+#              diagram over the geolocation map to show devices communication situation.
 #              
 # Author:      Liu Yuancheng
 #
@@ -14,32 +13,22 @@
 # License:     MIT License
 #-----------------------------------------------------------------------------
 
-# import python built in modules.
-import os
-
 # import pip installed modules.
 from flask import Flask, render_template, request
-# Install flask socketio library: pip3 install flask_socketio
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO # pip3 install flask_socketio
 
 # import project local modules.
 import p2pCommMapGlobal as gv
 import p2pCommMapDataMgr as dm
-import Log
-
-
-# Set this module execution flags.
-TEST_MODE = True    # Test mode flag - True: test on local computer.
-LOG_FLAG = True     # log information display flag.
-
 
 # Initialize the Flask application
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret_key'
-app.config['DEBUG'] = True  
+app.config['SECRET_KEY'] = 'any_secret_key'
+app.config['DEBUG'] = gv.gflaskDebug  
 gv.iSocketIO = SocketIO(app)
 
-gv.iDataMgr = dm.DataMgr(None, 0, "server thread")
+# Init the data base manager  
+gv.iDataMgr = dm.DataMgr(None, 0, "dataMgr thread")
 gv.iDataMgr.loadNodesData()
 gv.iDataMgr.start()
 

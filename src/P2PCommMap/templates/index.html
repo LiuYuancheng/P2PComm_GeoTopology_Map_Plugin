@@ -3,149 +3,144 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" data-bs-theme="dark">
 
 <html>
-    <head>
-        <!--flask scripts-->
-        <script src="static/js/maps.js"></script>
-        <link rel="stylesheet" href="static/css/map.css">
-        <!--Bootstrap lib scripts-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-            integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
-            integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
-            crossorigin="anonymous"></script>
 
-        <!--Google API scripts-->
-        <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
-        <title> P2PComm_GeoTopology_Map_Plugin </title>
-    </head>
+<head>
+    <!--flask scripts-->
+    <script src="static/js/maps.js"></script>
+    <link rel="stylesheet" href="static/css/map.css">
+    <!--Bootstrap lib scripts-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+        crossorigin="anonymous"></script>
 
-    <body style="background-image: url('../static/images/bgimg3.png');">
-        <div class="container-fluid overflow-auto" style="margin-top:50px; min-height:900px;">
-            <h3 style="color:white"> P2P Communication GeoLocation Topology Map Plugin Demo</h3>
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#setting"> <b>Settings</b> </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#search"> <b>Search</b> </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#legend"> <b>Legend</b> </a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content" >
-                        <div id="setting" class="container tab-pane active bg-dark" style="min-height:700px;"><br>
-                            <h4>Setting</h4>
-                            <form id="map-settings" action="." method="POST">
-                                <br>
-                                <label for="rate-uptake">Choose an uptake rate:</label>
-                                <select name="rate-uptake" id="rate-uptake"> 
-                                    <option value=60>60s</option>
-                                    <option value=30>30s</option>
-                                    <option value=20>20s</option>
-                                    <option value=10 selected="selected">10s</option>
-                                    <option value=5>5s</option>
-                                    <option value=3>3s</option>
-                                </select>
-                                <br>
-                                <br>
-                                <h4>Filter settings:</h4>
-                                <input checked type="checkbox" name="show-inactive" id="show-inactive">
-                                <label for="show-inactive"> Show inactive links</label><br>
-                                <input checked type="checkbox" name="show-gateway" id="show-gateway">
-                                <label for="show-gateway"> Show gateway links</label><br>
-                                <input checked type="checkbox" name="show-control" id="show-control">
-                                <label for="show-control"> Show control hub links</label><br>
-                                <br>
-                                <input type="submit" value="Submit">
-                            </form>
+    <!--Google API scripts-->
+    <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
+    <title> P2PComm_GeoTopology_Map_Plugin </title>
+</head>
+
+<body style="background-image: url('../static/images/bgimg3.png');">
+    <div class="container-fluid overflow-auto" style="margin-top:50px; min-height:900px;">
+        <h3 style="color:white"> P2P Communication GeoLocation Topology Map Plugin Demo</h3>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#setting"> <b>Settings</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#search"> <b>Search</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#legend"> <b>Legend</b> </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="setting" class="container tab-pane active bg-dark" style="min-height:700px;"><br>
+                        <h4>Setting</h4>
+                        <form id="map-settings" action="." method="POST">
+                            <br>
+                            <label for="rate-uptake">Choose an uptake rate:</label>
+                            <select name="rate-uptake" id="rate-uptake">
+                                <option value=60>60s</option>
+                                <option value=30>30s</option>
+                                <option value=20>20s</option>
+                                <option value=10 selected="selected">10s</option>
+                                <option value=5>5s</option>
+                                <option value=3>3s</option>
+                            </select>
+                            <br>
+                            <br>
+                            <h4>Filter settings:</h4>
+                            <input checked type="checkbox" name="show-inactive" id="show-inactive">
+                            <label for="show-inactive"> Show inactive links</label><br>
+                            <input checked type="checkbox" name="show-gateway" id="show-gateway">
+                            <label for="show-gateway"> Show gateway links</label><br>
+                            <input checked type="checkbox" name="show-control" id="show-control">
+                            <label for="show-control"> Show control hub links</label><br>
+                            <br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                    <div id="search" class="container tab-pane fade bg-dark" style="min-height:700px;"><br>
+                        <h4>Search</h4>
+                        <div class="vertical-menu" id="search-list">
+                            <button class="polyline active" value="-1">None</button>
                         </div>
-                        <div id="search" class="container tab-pane fade bg-dark" style="min-height:700px;"><br>
-                            <h4>Search</h4>
-                            <div class="vertical-menu" id="search-list">
-                                <button class="polyline active" value="-1">None</button>
-                            </div>
-                        </div>
-                        <div id="legend" class="container tab-pane fade bg-dark" style="min-height:700px;"><br>
-                            <h4>Legend</h4>
-                            <table id="legend-table" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Icon</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
+                    </div>
+                    <div id="legend" class="container tab-pane fade bg-dark" style="min-height:700px;"><br>
+                        <h4>Legend</h4>
+                        <table id="legend-table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
 
-                                <tbody>
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/yellow_marker.png')}}"></td>
-                                        <td>Yellow Marker</td>
-                                        <td>Control Hub Node</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/blue_marker.png')}}"></td>
-                                        <td>Blue Marker</td>
-                                        <td>Gateway Node</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/red_comm.png')}}"></td>
-                                        <td>Red Link</td>
-                                        <td>Active Control Hub to Gateway comm</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/blue_comm.png')}}"></td>
-                                        <td>Blue Link</td>
-                                        <td>Active Gateway to Gateway comm</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/black_comm.png')}}"></td>
-                                        <td>Black Link</td>
-                                        <td>Inactive Gateway to Gateway comm with key exchange</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/grey_comm.png')}}"></td>
-                                        <td>Grey Link</td>
-                                        <td>Inactive Gateway to Gateway comm without key exchange</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/arrow_animated.png')}}"></td>
-                                        <td>Green Arrow Pointer</td>
-                                        <td>Animated symbol for Gateway to Control Hub comm</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><img src="{{url_for('static', filename='images/circle_animated.png')}}"></td>
-                                        <td>Dark Blue Circle</td>
-                                        <td>Animated symbol for Gateway to Gateway comm</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <tbody>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/yellow_marker.png')}}"></td>
+                                    <td>Yellow Marker</td>
+                                    <td>Control Hub Node</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/blue_marker.png')}}"></td>
+                                    <td>Blue Marker</td>
+                                    <td>Gateway Node</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/red_comm.png')}}"></td>
+                                    <td>Red Link</td>
+                                    <td>Active Control Hub to Gateway comm</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/blue_comm.png')}}"></td>
+                                    <td>Blue Link</td>
+                                    <td>Active Gateway to Gateway comm</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/black_comm.png')}}"></td>
+                                    <td>Black Link</td>
+                                    <td>Inactive Gateway to Gateway comm with key exchange</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/grey_comm.png')}}"></td>
+                                    <td>Grey Link</td>
+                                    <td>Inactive Gateway to Gateway comm without key exchange</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/arrow_animated.png')}}"></td>
+                                    <td>Green Arrow Pointer</td>
+                                    <td>Animated symbol for Gateway to Control Hub comm</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="{{url_for('static', filename='images/circle_animated.png')}}"></td>
+                                    <td>Dark Blue Circle</td>
+                                    <td>Animated symbol for Gateway to Gateway comm</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-sm-9">
-                <div id="map" class="container-fluid overflow-auto" style="min-height:750px;"></div>
+                <div class="mt-2 p-2 bg-dark text-white rounded">
+                    <div id="map" class="container-fluid overflow-auto" style="min-height:720px;"></div>
+                </div>
             </div>
             <hr>
             <a href="mailto:liu_yuan_cheng@hotmail.com?subject=Report A problem&body=found a bug"> Report a problem </a>
         </div>
-    </body>
+</body>
     
     <script>
         // Retrieve the initial gateway markers
@@ -487,7 +482,5 @@
         });
     </script>
                     
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoHBPqxFw40DFvCbXrj1IWNcvkzb6WkkI&callback=initMap"
-    async defer></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoHBPqxFw40DFvCbXrj1IWNcvkzb6WkkI&callback=initMap" async defer></script>
 </html>

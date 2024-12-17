@@ -79,22 +79,12 @@ UPDATE_PERIODIC = 15
 COOKIE_TIME = 30
 
 #------<CONSTANTS>-------------------------------------------------------------
-
 DB_PATH = os.path.join(dirpath , CONFIG_DICT['DB_NAME'])
 NODES_FILE = os.path.join(dirpath, CONFIG_DICT['NODES_INFO'])
 
 # Google map API billing key:
 MAP_API_KEY = CONFIG_DICT['MAP_API_KEY'] # replace this with your own key.
-
-# Gateway marker link
-GW_MK_LK = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-# Gateway information box icon link
-GW_IB_LK = '../static/images/gateway.jpg'
-# Control hub marker lnik
-HB_MK_LK = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-# Control hub information box img link
-HB_IB_LK = '../static/images/hub.jpg'
-
+# Comm HUB GPS location
 CH_GPS = (float(CONFIG_DICT['HUB_LAT']), float(CONFIG_DICT['HUB_LONG'])) 
 
 #-------<GLOBAL VARIABLES (start with "g")>------------------------------------
@@ -110,7 +100,6 @@ gflaskHost = '0.0.0.0'
 gflaskPort = int(CONFIG_DICT['FLASK_SER_PORT']) if 'FLASK_SER_PORT' in CONFIG_DICT.keys() else 5000
 gflaskDebug = CONFIG_DICT['FLASK_DEBUG_MD']
 gflaskMultiTH =  CONFIG_DICT['FLASK_MULTI_TH']
-
 
 #-------<GLOBAL INSTANCES (start with "i")>-----------------------------------------------------
 # INSTANCES are the object. 

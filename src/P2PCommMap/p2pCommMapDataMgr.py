@@ -2,7 +2,8 @@
 #-----------------------------------------------------------------------------
 # Name:        p2pCommMapDataMgr.py
 #
-# Purpose:     This module will is the data manager of p2pCommMapApp
+# Purpose:     This module will is the data manager of p2pCommMapApp, it will load 
+#              the data from the database and provide the data to the web page. 
 #              
 # Author:      Liu Yuancheng
 #
@@ -34,7 +35,7 @@ class DevNode(object):
         # parameters with the default values
         self.ipAddr = "127.0.0.1"   # gateway public IP address.
         self.comNodeIDs = []        # gateway ID list this node is communicating with.
-        self.keyExchange = []        # gateway ID list this node conducted key exchange with.
+        self.keyExchange = []       # gateway ID list this node conducted key exchange with.
         self.rptNodeID = 0          # the hub ID node need to report. None if the node is a hub.     
         self.activeFlag = True      # node activate flag
         self.inThrput = 0           # incoming data through put (Mbps/s)
