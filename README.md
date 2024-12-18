@@ -1,8 +1,6 @@
 # P2PComm_GeoTopology_Map_Plugin
 
-**Program Design Purpose**: 
-
-The goal of this project is to develop a Flask-based web App plugin that can be integrated into a Security Information and Event Management (SIEM) system. This plugin is designed to visualize real-time peer-to-peer (P2P) communication status within a distributed system. Key metrics such as data flow throughput between encrypted devices and data transmission speed between servers and clients will be displayed alongside the network topology on an interactive geolocation map. This visualization will enable security administrators to effectively monitor, analyze, and manage real-time P2P communication states, helping to identify potential performance bottlenecks, latency issues, and abnormal communication patterns across the distributed network.
+**Program Design Purpose**: The goal of this project is to develop a Flask-based web App plugin that can be integrated into a Security Information and Event Management (SIEM) system. This plugin is designed to visualize real-time peer-to-peer (P2P) communication status within a distributed system. Key metrics such as data flow throughput between encrypted devices and data transmission speed between servers and clients will be displayed alongside the network topology on an interactive geolocation map. This visualization will enable security administrators to effectively monitor, analyze, and manage real-time P2P communication states, helping to identify potential performance bottlenecks, latency issues, and abnormal communication patterns across the distributed network.
 
 ```python
 # Version:     v0.2.1
@@ -19,15 +17,30 @@ The goal of this project is to develop a Flask-based web App plugin that can be 
 
 ### Introduction
 
+The P2PComm_GeoTopology_Map_Plugin is a Flask-based web application designed to visualize real-time peer-to-peer (P2P) communication diagrams and network topology over an interactive geolocation map. By leveraging the Google Maps API, this plugin delivers a dynamic and intuitive user experience, featuring fully customizable configuration settings and an all-in-one HTML webpage which can be easily integrate in other into Security Information and Event Management (SIEM) systems to make it a valuable addition for monitoring and managing distributed network communications. The Web plug UI is shown below:
+
+![](doc/img/map01.gif)
 
 
 
+This tool helps security administrators with enhanced capabilities to monitor and analyze distributed system communications. It provides insights into key metrics such as:
+
+- **P2P Device Data Flow Throughput**: Visualizes the transmission rate and data volume exchanged between encryption devices.
+- **Data Transmission Speed**: Tracks connection state, latency between servers, clients, and other network nodes.
+- **Network Topology**: Dynamically maps peer-to-peer relationships and data exchange paths.
+- **Geolocation Mapping**: Displays the physical locations of nodes and their communication links over an interactive map interface.
+
+The project is structured into three main components:
+
+1. **GeoTopology_Map Front-End Application**: A Flask-based front-end module that integrates with the Google Maps API to render an interactive map for real-time visualization.
+2. **Backend Data Database**: A lightweight SQLite3 database backend to store and manage device communication data, making it accessible to the web application.
+3. **Data Collection Module**: An interface program that gathers communication data from devices and updates the database in real time.
+
+These components form a system for visualizing and managing P2P communication and network topology, enhancing situational awareness and network security analysis. For the plugin demo, please refer to this video:
 
 
 
-
-
-
+------
 
 
 
