@@ -1,5 +1,7 @@
 # P2PComm_GeoTopology_Map_Plugin
 
+![](doc/img/rm_s00.png)
+
 **Program Design Purpose**: The goal of this project is to develop a Flask-based web App plugin that can be integrated into a Security Information and Event Management (SIEM) system. This plugin is designed to visualize real-time peer-to-peer (P2P) communication status within a distributed system. Key metrics such as data flow throughput between encrypted devices and data transmission speed between servers and clients will be displayed alongside the network topology on an interactive geolocation map. This visualization will enable security administrators to effectively monitor, analyze, and manage real-time P2P communication states, helping to identify potential performance bottlenecks, latency issues, and abnormal communication patterns across the distributed network.
 
 ```python
@@ -23,12 +25,14 @@ The P2PComm_GeoTopology_Map_Plugin is a Flask-based web application designed to 
 
 
 
-This tool helps security administrators with enhanced capabilities to monitor and analyze distributed system communications. It provides insights into key metrics such as:
+This tool can help the security administrators with enhanced capabilities to monitor and analyze distributed system communications. It provides insights into key metrics such as:
 
 - **P2P Device Data Flow Throughput**: Visualizes the transmission rate and data volume exchanged between encryption devices.
 - **Data Transmission Speed**: Tracks connection state, latency between servers, clients, and other network nodes.
 - **Network Topology**: Dynamically maps peer-to-peer relationships and data exchange paths.
 - **Geolocation Mapping**: Displays the physical locations of nodes and their communication links over an interactive map interface.
+
+#### System Main Components Introduction
 
 The project is structured into three main components:
 
@@ -42,27 +46,52 @@ These components form a system for visualizing and managing P2P communication an
 
 ------
 
+### System Design
+
+The system workflow diagram is shown below:
+
+![](doc/img/rm_s04.png)
+
+The system includes four function modules:
+
+**Flask Web Host Application** 
+
+- **Function**: Hosts the web interface and serves data to the user.
+- **Key Features**: Interactive map visualization using Google Maps API,  User-configurable settings for customizing the displayed topology and Real-time data updates based on user setting.
+
+**Data Management Module**
+
+- **Purpose**: Coordinates the overall workflow and integrates different modules.
+- **Key Features**: Loads initial configurations (e.g., database connections, API keys),  Manages data threads for processing and communication, Queries the database for the latest node and link data and Creates JSON objects for nodes and communication links.
+
+**Database**
+
+- **Function** : store the Node metadata (e.g., device IDs, geolocations) and Node metadata (e.g., device IDs, geolocations). Two table are included with below config:
+
+```sqlite
+CREATE TABLE IF NOT EXISTS gatewayInfo(id integer PRIMARY KEY, name text NOT NULL,ipAddr text NOT NULL,lat float NOT NULL,lng float NOT NULL, actF integer NOT NULL, rptTo integer NOT NULL,type text NOT NULL)
+```
+
+```sqlite
+CREATE TABLE IF NOT EXISTS gatewayState(time float PRIMARY KEY,id text NOT NULL, updateInfo text NOT NULL)
+```
+
+**Data Collection Module**
+
+- **Function** : Gathers data from monitored devices and updates the database.
+- 
 
 
-This project will create a map panel to show gateway devices' communication situation topographic. It is is a sub-project of the ‘QSG-Manager dashboard’ (Quantum Safe Gateway Manager) project. In the main ‘Quantum Safe Gateway’ project, there will be several gateway devices communicating with each other. QSG-Manager will collect and monitor the internal status of our gateway devices and visualize all the data. 
 
-Assume we have two gateway devices (gateway A and B) deployed in NTU and NUS. When these two gateways are communicating with each other, on the topographic map panel we will mark these two gateway GPS position on the map and draw a link between the 2 markers:
 
-![](doc/img/rm_preview.png)
 
-###### Gateway-Topographic-Map Main Page View
 
-Users are able to interact with the map by clicking on a marker for a popup showing the full details of gateway throughput and data rate between the 2 gateways.
 
 There is also a sidebar attached beside the map which allow users to decide various map settings. They can choose the data update rate of the flask webserver calling GET request through a dropdown menu. A filter function is also added to only display certain types of communication links (active, gateway, control hub).
 
 ![](doc/img/map.gif)
 
-###### The main workflow for the program
 
-![](doc/img/workflow.png)
-
-Version V_0.2
 
 ------
 
