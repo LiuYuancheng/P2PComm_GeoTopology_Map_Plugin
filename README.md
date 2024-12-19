@@ -142,63 +142,86 @@ Design of the icon, link on the map panel:
 
 ### Program Usage
 
-###### Program Execution Cmd 
+Follow the below steps to execute the program
 
-1. Start up the data insert simulation program to add new gateway 
-   ```
-   python3 databaseCreater.py
-   ```
+**Step1:Setup the configuration file**
 
-   Module API Usage: call `updateStateTable(self, gatewayID, infoStr)` to insert the new gateway state in to database.
-   
-2. Run the flask webserver to retrieve data from the QSG-Manager
+Rename the `src/config_template.txt` to `config.txt` , then fill in the your google map API and set the parameters as shown below:
 
-   ```
-   python3 topologyMapHost.py
-   ```
+```
+# This is the config file template for P2P communication display map
+# emulator program <p2pCommMapApp.py>
+# Setup the parameter with below format (every line follows <key>:<value> format, the
+# key can not be changed):
+#-----------------------------------------------------------------------------
+# Database file name
+DB_NAME:node_database.db
+# Node information record
+NODES_INFO:nodes_record.json
+# Google Map API key
+MAP_API_KEY:AIzaSyBoHBPqxFw40DFvCbXrj1IWNcvkzb6WkkI
+# Set the Hub GPS location
+HUB_LAT:1.2945315
+HUB_LONG:103.7746052
+#-----------------------------------------------------------------------------
+# Init the PLC local web Flask app parameters
+FLASK_SER_PORT:5000
+FLASK_DEBUG_MD:False
+FLASK_MULTI_TH:True
+```
 
-   **After running step2, wait 30 sec make sure the database thread fully started then do step 3.**
+Rename the `src/nodes_record_template.json` to `src/nodes_record.txt` and add your node in the json file with below info:
 
-3. Open web browser and enter URL: http://127.0.0.1:5000
+```json
+"<Node_ID>": {
+    "no": 1,
+    "name": "NUS",
+    "ipAddr": "10.0.0.1",
+    "lat": 1.2964053,
+    "lng": 103.7690442,
+    "type": "GW",
+    "rptTo": 0,
+    "actF": 0
+}
+```
 
+**Step 2 : Run the test data creator and map P2PComm_GeoTopology_Map App**
 
+Start up the data insert simulation program to add new gateway 
+```
+python3 databaseCreater.py
+```
 
-###### Web Page Usage
+If you want to link to your system call the module function `updateStateTable(self, gatewayID, infoStr)` to insert the new gateway state in to database.
+
+Run the flask webserver to retrieve data from the QSG-Manager
+
+```
+python3 p2pCommMapApp.py
+```
+
+**Step3 : View the P2PComm_GeoTopology_Map**
+
+After running step2, wait 30 sec make sure the database thread fully started then do step 3, open web browser and enter URL: http://127.0.0.1:5000, then check the web plug in as shown below:
 
 ![](doc/img/UI_view.png)
 
+You can use iframe to integrate the map in your SIEM dashboard, for example in Grafana dashboard AJAX config:
 
+![](doc/img/rm_s07.png)
 
-------
+Then you can see the map will show on the Grafana dashboard page:
 
-### Problem and Solution
+![](doc/img/rm_s08.png)
 
-###### Problem[0] **:** Unable to run flask server and socketIO concurrently due to threading issues
-
-**OS Platform** : Windows
-
-**Error Message**: greenlet.error: cannot switch to a different thread
-
-**Type**: Setup exception
-
-**Solution**:
-
-Upgrade Python 2.7 to Python 3.x to run Eventlet successfully. Alternatively, use gevent and gevent-socket library instead of eventlet:
-
-- Step 1: Uninstall eventlet library: pip3 uninstall eventlet
-- Step 2: Install gevent: pip3 install gevent
-- Step 3: Install gevent-socket: pip3 install gevent-socket
-
-
+For the problem and solution, please refer to the `Problem and Solution.docx` file in the doc folder.
 
 ------
 
-### Reference Link
+### Reference
 
-- N.A
-
-  
+- Google Map API: https://mapsplatform.google.com/
 
 ------
 
-> Last edit by LiuYuancheng(liu_yuan_cheng@hotmail.com) at 08/12/2021
+> Last edit by LiuYuancheng (liu_yuan_cheng@hotmail.com) at 21/12/2024, if you have any problem or find anu bug, please send me a message .
