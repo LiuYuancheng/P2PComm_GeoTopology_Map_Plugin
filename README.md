@@ -40,7 +40,7 @@ The project is structured into three main components:
 2. **Backend Data Database**: A lightweight SQLite3 database backend to store and manage device communication data, making it accessible to the web application.
 3. **Data Collection Module**: An interface program that gathers communication data from devices and updates the database in real time.
 
-These components form a system for visualizing and managing P2P communication and network topology, enhancing situational awareness and network security analysis. For the plugin demo, please refer to this video:
+These components form a system for visualizing and managing P2P communication and network topology, enhancing situational awareness and network security analysis. For the plugin demo, please refer to this video: https://youtu.be/mazMEglxK_U
 
 
 
@@ -79,17 +79,26 @@ CREATE TABLE IF NOT EXISTS gatewayState(time float PRIMARY KEY,id text NOT NULL,
 **Data Collection Module**
 
 - **Function** : Gathers data from monitored devices and updates the database.
-- 
 
+#### User Interface Design
 
+In the demo web app, we added a sidebar attached beside the map which allow users to decide various map settings. The user can choose the data update rate of the flask webserver calling GET request through a dropdown menu. A filter function is also added to only display certain types of communication links (active, gateway, control hub). The design of the control is shown below:
 
+![](doc/img/rm_s05.png)
 
+Design of the icon, link on the map panel:
 
+![](doc/img/rm_s06.png)
 
-
-There is also a sidebar attached beside the map which allow users to decide various map settings. They can choose the data update rate of the flask webserver calling GET request through a dropdown menu. A filter function is also added to only display certain types of communication links (active, gateway, control hub).
-
-![](doc/img/map.gif)
+| Name                      | Type | Description                                                  |
+| ------------------------- | ---- | ------------------------------------------------------------ |
+| Yellow Marker             | Icon | Control hub node                                             |
+| Blue Marker               | Icon | Gateway or device node                                       |
+| Red Line Between Makers   | Link | Active link gateway or device report to control hub          |
+| Blue Line Between Makers  | Link | Active communication link between two device                 |
+| Black Line Between Makers | Link | Inactive communication link between two device               |
+| Green Arrow Pointer       | Icon | Animated symbol shows Gateway report to Control Hub regularly |
+| Dark Blue Circle          | Icon | Animated symbol for show the data transmission between two device |
 
 
 
@@ -97,53 +106,35 @@ There is also a sidebar attached beside the map which allow users to decide vari
 
 ### Program Setup
 
-###### Development Environment 
+**Development Environment**  :  Python3.7.4, HTML+flask, socketIO+eventlet, SQLite3
 
-Python3.7.4, HTML+flask, socketIO+eventlet, SQLite3
+**Additional Lib/Software Need**
 
-###### Additional Lib/Software Need
+| Lib Module          | Version | Installation                  | Lib link                                                |
+| ------------------- | ------- | ----------------------------- | ------------------------------------------------------- |
+| **Flask**           | 1.1.2   | `pip install Flask`           | https://flask.palletsprojects.com/en/3.0.x/             |
+| **flask-socketIO**  | 4.5.1   | `pip3 install flask-socketio` | https://flask-socketio.readthedocs.io/en/latest/        |
+| **SQL Browser**     |         |                               | https://sqlitebrowser.org/blog/version-3-12-2-released/ |
+| **python eventlet** |         | pip3 install eventlet         | https://pypi.org/project/eventlet/                      |
 
-1. **python Flask** : https://www.fullstackpython.com/flask.html
+**Hardware Needed** : None
 
-   ```
-   Installation cmd: pip3 install Flask
-   ```
+**Program Files List** 
 
-3. **flask-socketIO 4.5.1**: https://flask-socketio.readthedocs.io/en/latest/
-
-   ```
-   Installation cmd: pip3 install flask-socketio
-   ```
-
-4. **SQL Browser**: https://sqlitebrowser.org/blog/version-3-12-2-released/
-
-4. **python eventlet**: https://pypi.org/project/eventlet/
-
-   ```
-   pip3 install eventlet
-   ```
-
-5. --
-
-###### Hardware Needed : None
-
-###### Program Files List 
-
-version: v0.2
-
-| Program File             | Execution Env | Description                                                  |
-| ------------------------ | ------------- | ------------------------------------------------------------ |
-| src/topologyMapHost.py   | python3       | This module is used create flask webserver to send GET request with the QSG-Manager. |
-| src/globalVal.py         | python3       | This module stores all the global variables used in the flask webserver. |
-| src/node_database.db     |               | Database file.                                               |
-| src/databaseCreater.py   |               | Module to insert the simulation data into the data base.     |
-| src/Log.py               |               | Log generation mode.                                         |
-| src/NodesRcd.txt         |               | File to save simulation node information.                    |
-| src/ConfigLoader.py      | python3       | Module to load the node record file.                         |
-| src/templates/index.html | HTML          | This file generates the UI of the Topological Maps using Google Maps. |
-| src/static/js/maps.js    | JavaScript    | This module stores the static JS functions to run the Google Map. |
-| src/static/css/map.css   | CSS           | This is the stylesheet for the Topological Map.              |
-| src/static/img           |               | Image file used by the web page.                             |
+| Program File                     | Execution Env | Description                                                  |
+| -------------------------------- | ------------- | ------------------------------------------------------------ |
+| `src/p2pCommMapApp.py`           | python3       | Main flask web plug-in p2p connection topology diagram over the geolocation map to show devices communication situation. |
+| `src/p2pCommMapGlobal.py`        | python3       | This module stores all the global variables used in the flask webserver. |
+| `src/node_database.db`           |               | Database file.                                               |
+| `src/databaseCreater.py`         | python3       | Module to insert the simulation test data into the data base. |
+| `lib/Log.py`                     | python3       | Log generation mode.                                         |
+| `src/nodes_record_template.json` | JSON          | File template to save simulation node information.           |
+| `lib/ConfigLoader.py`            | python3       | Module to load the node record file.                         |
+| `src/templates/index.html`       | HTML          | This file generates the UI of the Topological Maps using Google Maps. |
+| `src/static/js/maps.js`          | JavaScript    | This module stores the static JS functions to run the Google Map. |
+| `src/static/css/map.css`         | CSS           | This is the stylesheet for the Topological Map.              |
+| `src/static/img`                 |               | Image file used by the web page.                             |
+| `src/config_template.txt`        |               | The config file template                                     |
 
 
 

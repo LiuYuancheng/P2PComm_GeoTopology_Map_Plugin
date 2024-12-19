@@ -1,4 +1,4 @@
-# This is the config file template for the PLC honeypot project's S7Comm PLC 
+# This is the config file template for P2P communication display map
 # emulator program <p2pCommMapApp.py>
 # Setup the parameter with below format (every line follows <key>:<value> format, the
 # key can not be changed):
